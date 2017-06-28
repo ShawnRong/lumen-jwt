@@ -18,6 +18,21 @@ $api->version('v1', [
         'uses' => 'AuthController@store',
     ]);
 
+    //Refresh Token
+    $api->put('authorizations/current', [
+        'as' => 'authorizatons.update',
+        'uses' => 'AuthController@update',
+    ]);
+
+    //require login request
+    $api->group(['middleware' => 'api.auth'], function ($api) {
+        //Delete Token
+        $api->delete('authorizations/current', [
+            'as' => 'authorizatoins.delete',
+            'uses' => 'AuthController@delete',
+        ]);
+    });
+
 });
 
 

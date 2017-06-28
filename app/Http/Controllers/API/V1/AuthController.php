@@ -12,7 +12,6 @@ class AuthController extends BaseController
 {
     public function store(Request $request)
     {
-
         $validator = Validator::make($request->all(), [
             'email' => 'required|email',
             'password' => 'required',
@@ -35,6 +34,20 @@ class AuthController extends BaseController
 
         return $this->response->item($authorization, new AuthorizationTransformer())
             ->setStatusCode(201);
+    }
+
+    public function update()
+    {
+        $authorization = new Authorization(Auth::refresh());
+
+        return $this->response->item($authorization, new AuthorizationTransformer());
+    }
+
+    public function destroy()
+    {
+        Auth::logout();
+
+        return $this->response->noContent();
     }
 }
 
