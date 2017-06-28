@@ -23,9 +23,12 @@ $app = new Laravel\Lumen\Application(
     realpath(__DIR__.'/../')
 );
 
-// $app->withFacades();
+$app->withFacades();
 
-// $app->withEloquent();
+$app->withEloquent();
+
+// Load jwt config
+$app->configure('jwt');
 
 /*
 |--------------------------------------------------------------------------
@@ -66,6 +69,15 @@ $app->singleton(
 // $app->routeMiddleware([
 //     'auth' => App\Http\Middleware\Authenticate::class,
 // ]);
+//$app->middleware([
+//    // 根据 accept-language 设置语言
+//    'locale' => App\Http\Middleware\ChangeLocale::class,
+//]);
+
+$app->routeMiddleware([
+//    'cors' => palanik\lumen\Middleware\LumenCors::class,
+    'auth' => App\Http\Middleware\Authenticate::class,
+]);
 
 /*
 |--------------------------------------------------------------------------
@@ -78,10 +90,23 @@ $app->singleton(
 |
 */
 
-// $app->register(App\Providers\AppServiceProvider::class);
-// $app->register(App\Providers\AuthServiceProvider::class);
+$app->register(App\Providers\AppServiceProvider::class);
+$app->register(App\Providers\AuthServiceProvider::class);
 // $app->register(App\Providers\EventServiceProvider::class);
 
+//import Dingo provider
+$app->register(Dingo\Api\Provider\LumenServiceProvider::class);
+//import jwt provider
+$app->register(Tymon\JWTAuth\Providers\LumenServiceProvider::class);
+
+app('Dingo\Api\Auth\Auth')->extend('jwt', function ($app) {
+    return new Dingo\Api\Auth\Provider\JWT($app['Tymon\JWTAuth\JWTAuth']);
+});
+
+// Injecting auth
+$app->singleton(Illuminate\Auth\AuthManager::class, function ($app) {
+    return $app->make('auth');
+});
 /*
 |--------------------------------------------------------------------------
 | Load The Application Routes
@@ -94,6 +119,7 @@ $app->singleton(
 */
 
 $app->group(['namespace' => 'App\Http\Controllers'], function ($app) {
+    require __DIR__.'/../routes/api/v1.php';
     require __DIR__.'/../routes/web.php';
 });
 
