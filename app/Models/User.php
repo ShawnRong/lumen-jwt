@@ -13,15 +13,10 @@ class User extends BaseModel implements AuthenticatableContract, JWTSubject
 
     protected $hidden = ['password', 'deleted_at'];
 
-//    public function posts()
-//    {
-//        return $this->hasMany(Post::class);
-//    }
-//
-//    public function comments()
-//    {
-//        return $this->hasMany(Comment::class);
-//    }
+    public function threads()
+    {
+        return $this->hasMany(Thread::class)->latest();
+    }
 
     public function getJWTIdentifier()
     {

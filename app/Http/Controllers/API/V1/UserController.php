@@ -92,32 +92,7 @@ class UserController extends BaseController
 
     public function editPassword(Request $request)
     {
-//        $validator = Validator::make($request->all(), [
-//            'old_password' => 'required',
-//            'password' => 'required|confirmed|different:old_password',
-//            'password_confirmation' => 'required|same:password',
-//        ]);
-//
-//        if ($validator->fails()) {
-//            return $this->errorBadRequest($validator);
-//        }
-//
-//        $user = $this->user();
-//
-//        $auth = Auth::once([
-//            'email' => $user->email,
-//            'password' => $request->get('old_password'),
-//        ]);
-//
-//        if (! $auth) {
-//            return $this->response->errorUnauthorized();
-//        }
-//
-//        $password = app('hash')->make($request->get('password'));
-//        $user->update(['password' => $password]);
-//
-//        return $this->response->noContent();
-        $validator = \Validator::make($request->all(), [
+        $validator = Validator::make($request->all(), [
             'old_password' => 'required',
             'password' => 'required|confirmed|different:old_password',
             'password_confirmation' => 'required|same:password',
@@ -129,7 +104,7 @@ class UserController extends BaseController
 
         $user = $this->user();
 
-        $auth = \Auth::once([
+        $auth = Auth::once([
             'email' => $user->email,
             'password' => $request->get('old_password'),
         ]);

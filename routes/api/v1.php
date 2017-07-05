@@ -40,6 +40,24 @@ $api->version('v1', [
         'uses' => 'UserController@show',
     ]);
 
+    //Thread List
+    $api->get('threads', [
+        'as' => 'threads.index',
+        'uses' => 'ThreadsController@index',
+    ]);
+
+    //Thread Detail
+    $api->get('threads/{thread}', [
+        'as' => 'threads.show',
+        'uses' => 'ThreadsController@show',
+    ]);
+
+    //Channel List
+    $api->get('channels', [
+        'as' => 'channels.index',
+        'uses' => 'ChannelsController@index',
+    ]);
+
     //require login request
     $api->group(['middleware' => 'api.auth'], function ($api) {
         //Delete Token
@@ -65,6 +83,46 @@ $api->version('v1', [
             'as'  => 'user.password.update',
             'uses' => 'UserController@editPassword',
         ]);
+
+        //Create Thread
+        $api->post('threads', [
+            'as' => 'threads.store',
+            'uses' => 'ThreadsController@store',
+        ]);
+
+        $api->delete('threads/{thread}', [
+            'as' => 'threads.destroy',
+            'uses' => 'ThreadsController@destroy',
+        ]);
+
+        //Update Thread
+        $api->put('threads/{thread}', [
+            'as' => 'threads.update',
+            'uses' => 'ThreadsController@update',
+        ]);
+
+        //TODO: Update part of thread
+//        $api->patch('threads/{thread}', [
+//            'as'  => 'threads.patch',
+//            'uses' => 'ThreadsController@patch',
+//        ]);
+
+
+        //Create Channel
+        //TODO: Add create channel
+//        $api->post('channel', [
+//            'as' => 'channel.store',
+//            'uses' => 'ChannelsController@store',
+//        ]);
+
+        //Destroy Channel
+        //TODO: Add destroy channel
+//        $api->delete('channel', [
+//            'as' => 'channel.destroy',
+//            'uses' => 'ChannelsController@destroy',
+//        ]);
+
+
     });
 
 });

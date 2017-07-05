@@ -11,9 +11,18 @@
 |
 */
 
-$factory->define(App\User::class, function (Faker\Generator $faker) {
+//$factory->define(App\User::class, function (Faker\Generator $faker) {
+//    return [
+//        'name' => $faker->name,
+//        'email' => $faker->email,
+//    ];
+//});
+
+//create Channels
+$factory->define(App\Models\Channel::class, function(Faker\Generator $faker) {
+    $name = $faker->word;
     return [
-        'name' => $faker->name,
-        'email' => $faker->email,
+        'name' => $name,
+        'slug' => $name,
     ];
 });
