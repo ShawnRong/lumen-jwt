@@ -58,6 +58,12 @@ $api->version('v1', [
         'uses' => 'ChannelsController@index',
     ]);
 
+    //Reply List
+    $api->get('threads/{thread}/replies', [
+        'as' => 'replies.index',
+        'uses' => 'RepliesController@index',
+    ]);
+
     //require login request
     $api->group(['middleware' => 'api.auth'], function ($api) {
         //Delete Token
@@ -121,6 +127,25 @@ $api->version('v1', [
 //            'as' => 'channel.destroy',
 //            'uses' => 'ChannelsController@destroy',
 //        ]);
+
+        //Post Reply
+        $api->post('threads/{thread}/replies', [
+            'as'  => 'replies.store',
+            'uses' => 'RepliesController@store',
+        ]);
+
+        //Delete Reply
+        $api->delete('replies/{reply}', [
+            'as' => 'replies.destroy',
+            'uses' => 'RepliesController@destroy',
+        ]);
+
+        //Update Reply
+
+        $api->patch('replies/{reply}', [
+            'as' => 'replies.update',
+            'uses' => 'RepliesController@update',
+        ]);
 
 
     });
