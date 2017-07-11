@@ -68,6 +68,12 @@ $api->version('v1', [
         'uses' => 'RepliesController@index',
     ]);
 
+    //Get personal profile
+    $api->get('profiles/{user}', [
+        'as' => 'profile.show',
+        'uses' => 'ProfilesController@show',
+    ]);
+
     //require login request
     $api->group(['middleware' => 'api.auth'], function ($api) {
         //Delete Token
@@ -146,7 +152,6 @@ $api->version('v1', [
         ]);
 
         //Update Reply
-
         $api->patch('replies/{reply}', [
             'as' => 'replies.update',
             'uses' => 'RepliesController@update',

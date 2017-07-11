@@ -2,8 +2,12 @@
 
 namespace App\Models;
 
+use App\RecordsActivity;
+
 class Thread extends BaseModel
 {
+    use RecordsActivity;
+
     public function creator()
     {
         return $this->belongsTo(User::class, 'user_id');
