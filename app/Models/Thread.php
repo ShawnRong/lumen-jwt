@@ -28,6 +28,25 @@ class Thread extends BaseModel
         return $filter->apply($query);
     }
 
+    public function subscriptions()
+    {
+        return $this->hasMany(ThreadSubscription::class);
+    }
+
+    public function subscribe($userId = null)
+    {
+        $this->subscriptions()->create([
+            'user_id' => app('Dingo\Api\Auth\Auth')->user()->id,
+        ]);
+
+        return $this;
+    }
+
+    public function unsubscribe($useId = null)
+    {
+        $this->subscriptions()->where('user_id', $useId ? :app('Dingo\Api\Auth\Auth')->user()->id)->delete();
+    }
+
     //Other
     public function path()
     {

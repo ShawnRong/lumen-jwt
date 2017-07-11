@@ -164,8 +164,19 @@ $api->version('v1', [
         ]);
 
         $api->delete('replies/{reply}/favorites', [
-            'as' => 'favorites.delete',
-            'uses' => 'FavoritesController@delete',
+            'as' => 'favorite.destroy',
+            'ues' => 'FavoritesController@destroy',
+        ]);
+
+        //Thread subscription
+        $api->post('threads/{channel}/{thread}/subscriptions', [
+            'as' => 'subscription.store',
+            'uses' => 'ThreadSubscriptionsController@store',
+        ]);
+
+        $api->delete('threads/{channel}/{thread}/subscriptions', [
+            'as' => 'subscription.destroy',
+            'uses' => 'ThreadSubscriptionsController@destroy'
         ]);
 
     });
