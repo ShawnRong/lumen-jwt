@@ -2,11 +2,12 @@
 
 namespace App\Models;
 
+use App\Favoritable;
 use App\RecordsActivity;
 
 class Reply extends BaseModel
 {
-    use RecordsActivity;
+    use Favoritable, RecordsActivity;
 
     protected static function boot()
     {
@@ -29,6 +30,11 @@ class Reply extends BaseModel
     public function thread()
     {
         return $this->belongsTo(Thread::class);
+    }
+
+    public function favorites()
+    {
+        return $this->morphMany(Favorite::class, 'favorited');
     }
 
 }

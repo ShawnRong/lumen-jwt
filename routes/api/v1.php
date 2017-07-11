@@ -157,6 +157,16 @@ $api->version('v1', [
             'uses' => 'RepliesController@update',
         ]);
 
+        //Favorite reply
+        $api->post('replies/{reply}/favorites', [
+            'as'  => 'favorite.store',
+            'uses' => 'FavoritesController@store',
+        ]);
+
+        $api->delete('replies/{reply}/favorites', [
+            'as' => 'favorites.delete',
+            'uses' => 'FavoritesController@delete',
+        ]);
 
     });
 
