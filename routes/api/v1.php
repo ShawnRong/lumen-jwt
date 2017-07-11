@@ -63,7 +63,7 @@ $api->version('v1', [
     ]);
 
     //Reply List
-    $api->get('threads/{thread}/replies', [
+    $api->get('threads/{channel}/{thread}/replies', [
         'as' => 'replies.index',
         'uses' => 'RepliesController@index',
     ]);
@@ -107,7 +107,7 @@ $api->version('v1', [
         ]);
 
         //Update Thread
-        $api->put('threads/{thread}', [
+        $api->put('threads/{channel}/{thread}', [
             'as' => 'threads.update',
             'uses' => 'ThreadsController@update',
         ]);
@@ -134,7 +134,7 @@ $api->version('v1', [
 //        ]);
 
         //Post Reply
-        $api->post('threads/{thread}/replies', [
+        $api->post('threads/{channel}/{thread}/replies', [
             'as'  => 'replies.store',
             'uses' => 'RepliesController@store',
         ]);

@@ -68,7 +68,7 @@ class ThreadsController extends BaseController
         return $this->response->noContent();
     }
 
-    public function update(Request $request, Thread $thread)
+    public function update(Request $request, Channel $channel,Thread $thread)
     {
         $thread = $this->thread->findOrFail($thread->id);
 
@@ -79,6 +79,7 @@ class ThreadsController extends BaseController
         $validator = Validator::make($request->input(),[
             'title' => 'required',
             'body' => 'required',
+            'channel_id' => 'required|exists:channels,id',
         ]);
 
         if ($validator->fails()) {

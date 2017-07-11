@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Models\Channel;
 use App\Models\Reply;
 use App\Models\Thread;
 use Dingo\Api\Http\Request;
@@ -18,14 +19,14 @@ class RepliesController extends BaseController
         $this->thread = $thread;
     }
 
-    public function index($threadId)
+    public function index(Channel $channel, Thread $thread)
     {
-        $thread = $this->thread->findOrFail($threadId);
-        return $thread->replies()->paginate(2);
+        $thread = $this->thread->findOrFail($thread->id);
+        return $thread->replies()->paginate(20);
 
     }
 
-    public function store(Request $request, $threadId)
+    public function store(Request $request, Thread $thread)
     {
         $validator = Validator::make($request->all(), [
             'body' => 'required'
@@ -39,16 +40,16 @@ class RepliesController extends BaseController
 
         $attributes = $request->only('body');
         $attributes['user_id'] = $user;
-        $attributes['thread_id'] = $threadId;
+        $attributes['thread_id'] = $thread->id;
 
         $this->reply->create($attributes);
 
         return $this->response->created();
     }
 
-    public function destroy($replyId)
+    public function destroy(Reply $reply)
     {
-        $reply = $this->reply->findOrFail($replyId);
+        $reply = $this->reply->findOrFail($reply->id);
 
         if ($reply->user_id != $this->user()->id) {
             return $this->response->errorForbidden();
@@ -59,9 +60,9 @@ class RepliesController extends BaseController
         return $this->response->noContent();
     }
 
-    public function update(Request $request, $replyId)
+    public function update(Request $request, Reply $reply)
     {
-        $reply = $this->reply->findOrFail($replyId);
+        $reply = $this->reply->findOrFail($reply->id);
 
         if ($reply->user_id != $this->user()->id) {
             return $this->response->errorForbidden();
@@ -75,7 +76,7 @@ class RepliesController extends BaseController
             return $this->errorBadRequest($validator);
         }
 
-        $reply->update(['body'=> 'bodyupdate']);
+        $reply->update(['body'=> $request['body']]);
 
         return $this->response->noContent();
     }
