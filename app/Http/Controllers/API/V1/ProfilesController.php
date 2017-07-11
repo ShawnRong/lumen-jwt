@@ -14,5 +14,4 @@ class ProfilesController
             'activities' => Activity::feed($user)
         ];
     }
-
 }

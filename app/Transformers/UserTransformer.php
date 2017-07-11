@@ -30,4 +30,3 @@ class UserTransformer extends TransformerAbstract
         return $this->item($this->authorization, new AuthorizationTransformer());
     }
 }
-

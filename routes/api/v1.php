@@ -178,10 +178,5 @@ $api->version('v1', [
             'as' => 'subscription.destroy',
             'uses' => 'ThreadSubscriptionsController@destroy'
         ]);
-
     });
-
 });
-
-
-

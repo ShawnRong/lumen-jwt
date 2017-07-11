@@ -33,7 +33,7 @@ class ThreadsController extends BaseController
 
     public function store(Request $request)
     {
-        $validator = Validator::make($request->input(),[
+        $validator = Validator::make($request->input(), [
             'title' => 'required',
             'body' => 'required',
             'channel_id' => 'required|exists:channels,id',
@@ -43,7 +43,7 @@ class ThreadsController extends BaseController
             return $this->errorBadRequest($validator);
         }
 
-        $attributes = $request->only('title', 'body','channel_id');
+        $attributes = $request->only('title', 'body', 'channel_id');
         $attributes['user_id'] = $this->user()->id;
 
         $thread = $this->thread->create($attributes);
@@ -68,7 +68,7 @@ class ThreadsController extends BaseController
         return $this->response->noContent();
     }
 
-    public function update(Request $request, Channel $channel,Thread $thread)
+    public function update(Request $request, Channel $channel, Thread $thread)
     {
         $thread = $this->thread->findOrFail($thread->id);
 
@@ -76,7 +76,7 @@ class ThreadsController extends BaseController
             return $this->response->errorForbidden();
         }
 
-        $validator = Validator::make($request->input(),[
+        $validator = Validator::make($request->input(), [
             'title' => 'required',
             'body' => 'required',
             'channel_id' => 'required|exists:channels,id',
@@ -95,11 +95,10 @@ class ThreadsController extends BaseController
     {
         $threads = Thread::latest()->filter($filters);
 
-        if($channel->exists) {
+        if ($channel->exists) {
             $threads->where('channel_id', $channel->id);
         }
 
         return $threads->paginate();
     }
 }
-

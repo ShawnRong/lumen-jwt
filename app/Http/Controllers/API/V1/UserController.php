@@ -32,7 +32,7 @@ class UserController extends BaseController
 
     public function store(Request $request)
     {
-        $validator = Validator::make($request->input(),[
+        $validator = Validator::make($request->input(), [
             'email' => 'required|email|unique:users',
             'name' => 'required|string',
             'password' => 'required',
@@ -66,7 +66,6 @@ class UserController extends BaseController
         return $this->response->item($user, $transformer)
             ->header('Location', $location)
             ->setStatusCode(201);
-
     }
 
     public function patch(Request $request)

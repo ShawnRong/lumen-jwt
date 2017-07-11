@@ -16,6 +16,6 @@ $app->get('/', function () use ($app) {
 });
 
 
-$app->get('channel/{channel}', function(App\Models\Channel $channel) {
+$app->get('channel/{channel}', function (App\Models\Channel $channel) {
     return $channel->id;
 });

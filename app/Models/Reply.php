@@ -13,11 +13,11 @@ class Reply extends BaseModel
     {
         parent::boot();
 
-        static::created(function($reply){
+        static::created(function ($reply) {
             $reply->thread->increment('replies_count');
         });
 
-        static::deleted(function($reply){
+        static::deleted(function ($reply) {
             $reply->thread->decrement('replies_count');
         });
     }
@@ -36,5 +36,4 @@ class Reply extends BaseModel
     {
         return $this->morphMany(Favorite::class, 'favorited');
     }
-
 }

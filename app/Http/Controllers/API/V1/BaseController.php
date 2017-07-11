@@ -31,5 +31,4 @@ class BaseController extends Controller
         }
         throw new ValidationHttpException($result);
     }
-
 }

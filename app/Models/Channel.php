@@ -4,7 +4,6 @@ namespace App\Models;
 
 class Channel extends BaseModel
 {
-
     public function getRouteKeyName()
     {
         return 'slug';
@@ -14,6 +13,4 @@ class Channel extends BaseModel
     {
         return $this->hasMany(Thread::class);
     }
-
 }
-

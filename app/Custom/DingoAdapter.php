@@ -28,7 +28,7 @@ class DingoAdapter extends BaseDingoAdapter
 
         // This is what we extended the class for, to use the dispatcher created
         // by LumenRouteBinding instead of creating a new one.
-        $this->app['dispatcher']->setRoutesResolver(function() use ($routes) {
+        $this->app['dispatcher']->setRoutesResolver(function () use ($routes) {
             return $routes->getData();
         });
 

@@ -52,5 +52,4 @@ class Thread extends BaseModel
     {
         return "/api/threads/{$this->channel->slug}/{$this->id}";
     }
-
 }

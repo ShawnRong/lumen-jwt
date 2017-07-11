@@ -23,7 +23,6 @@ class RepliesController extends BaseController
     {
         $thread = $this->thread->findOrFail($thread->id);
         return $thread->replies()->paginate(20);
-
     }
 
     public function store(Request $request, Thread $thread)
@@ -68,7 +67,7 @@ class RepliesController extends BaseController
             return $this->response->errorForbidden();
         }
 
-        $validator = Validator::make($request->input(),[
+        $validator = Validator::make($request->input(), [
             'body' => 'required',
         ]);
 
@@ -80,5 +79,4 @@ class RepliesController extends BaseController
 
         return $this->response->noContent();
     }
-
 }

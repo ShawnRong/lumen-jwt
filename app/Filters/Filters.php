@@ -32,6 +32,4 @@ abstract class Filters
     {
         return $this->request->intersect($this->filters);
     }
-
-
 }

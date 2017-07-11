@@ -20,4 +20,3 @@ class ChannelsController extends BaseController
         return $this->response->item($this->channel, new ChannelTransformer());
     }
 }
-

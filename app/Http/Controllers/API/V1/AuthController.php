@@ -26,7 +26,7 @@ class AuthController extends BaseController
         $credentials = $request->only('email', 'password');
 
         //validate token
-        if(! $token = Auth::attempt($credentials)) {
+        if (! $token = Auth::attempt($credentials)) {
             $this->response->errorUnauthorized('incorrect');
         }
 
@@ -50,4 +50,3 @@ class AuthController extends BaseController
         return $this->response->noContent();
     }
 }
-

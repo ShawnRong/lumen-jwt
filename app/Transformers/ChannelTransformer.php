@@ -2,7 +2,6 @@
 
 namespace App\Transformers;
 
-
 use App\Models\Channel;
 use League\Fractal\TransformerAbstract;
 

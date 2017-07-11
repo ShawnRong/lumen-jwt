@@ -26,6 +26,4 @@ class ThreadFilters extends Filters
     {
         return $this->builder->where('replies_count', 0);
     }
-
-
 }

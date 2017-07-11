@@ -13,6 +13,4 @@ class ThreadSubscription extends BaseModel
     {
         return $this->belongsTo(Thread::class);
     }
-
-
 }
