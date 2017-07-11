@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Filters\ThreadFilters;
+use App\Models\Channel;
 use App\Models\Thread;
 use App\Transformers\ThreadTransformer;
 use Illuminate\Http\Request;
@@ -15,17 +17,16 @@ class ThreadsController extends BaseController
         $this->thread = $thread;
     }
 
-    public function index()
+    public function index(Channel $channel, ThreadFilters $filters)
     {
-        $threads = $this->thread->paginate();
+        $threads = $this->getThreads($channel, $filters);
 
         return $this->response->paginator($threads, new ThreadTransformer());
-
     }
 
-    public function show($threadId)
+    public function show(Channel $channel, Thread $thread)
     {
-        $thread = Thread::findOrFail($threadId);
+        $thread = Thread::findOrFail($thread->id);
 
         return $this->response->item($thread, new ThreadTransformer());
     }
@@ -35,25 +36,28 @@ class ThreadsController extends BaseController
         $validator = Validator::make($request->input(),[
             'title' => 'required',
             'body' => 'required',
+            'channel_id' => 'required|exists:channels,id',
         ]);
 
         if ($validator->fails()) {
             return $this->errorBadRequest($validator);
         }
 
-        $attributes = $request->only('title', 'body');
+        $attributes = $request->only('title', 'body','channel_id');
         $attributes['user_id'] = $this->user()->id;
 
         $thread = $this->thread->create($attributes);
 
-        $location = dingo_route('v1', 'threads.show', $thread->id);
+
+//        $location = dingo_route('v1', 'threads.show', $thread->channel->slug,$thread->id);
+        $location = $thread->path();
 
         return $this->response->created($location);
     }
 
-    public function destroy($threadId)
+    public function destroy(Channel $channel, Thread $thread)
     {
-        $thread = $this->thread->findOrFail($threadId);
+        $thread = $this->thread->findOrFail($thread->id);
 
         if ($thread->user_id != $this->user()->id) {
             return $this->response->errorForbidden();
@@ -64,9 +68,9 @@ class ThreadsController extends BaseController
         return $this->response->noContent();
     }
 
-    public function update(Request $request, $threadId)
+    public function update(Request $request, Thread $thread)
     {
-        $thread = $this->thread->findOrFail($threadId);
+        $thread = $this->thread->findOrFail($thread->id);
 
         if ($thread->user_id != $this->user()->id) {
             return $this->response->errorForbidden();
@@ -84,6 +88,17 @@ class ThreadsController extends BaseController
         $thread->update(['title' => 'update', 'body'=> 'bodyupdate']);
 
         return $this->response->noContent();
+    }
+
+    protected function getThreads(Channel $channel, ThreadFilters $filters)
+    {
+        $threads = Thread::latest()->filter($filters);
+
+        if($channel->exists) {
+            $threads->where('channel_id', $channel->id);
+        }
+
+        return $threads->paginate();
     }
 }
 

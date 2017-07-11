@@ -95,7 +95,9 @@ $app->register(App\Providers\AuthServiceProvider::class);
 // $app->register(App\Providers\EventServiceProvider::class);
 
 //import Dingo provider
-$app->register(Dingo\Api\Provider\LumenServiceProvider::class);
+//$app->register(Dingo\Api\Provider\LumenServiceProvider::class);
+$app->register(App\Providers\DingoServiceProvider::class);
+
 //import jwt provider
 $app->register(Tymon\JWTAuth\Providers\LumenServiceProvider::class);
 
@@ -107,6 +109,10 @@ app('Dingo\Api\Auth\Auth')->extend('jwt', function ($app) {
 $app->singleton(Illuminate\Auth\AuthManager::class, function ($app) {
     return $app->make('auth');
 });
+
+//$app->register('App\Providers\RouteBindingServiceProvider');
+$app->register(App\Providers\RouteBindingServiceProvider::class);
+
 /*
 |--------------------------------------------------------------------------
 | Load The Application Routes

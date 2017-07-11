@@ -41,13 +41,17 @@ $api->version('v1', [
     ]);
 
     //Thread List
+    $api->get('threads/{channel}', [
+        'as' => 'threads.index',
+        'uses' => 'ThreadsController@index',
+    ]);
     $api->get('threads', [
         'as' => 'threads.index',
         'uses' => 'ThreadsController@index',
     ]);
 
     //Thread Detail
-    $api->get('threads/{thread}', [
+    $api->get('threads/{channel}/{thread}', [
         'as' => 'threads.show',
         'uses' => 'ThreadsController@show',
     ]);
@@ -96,7 +100,8 @@ $api->version('v1', [
             'uses' => 'ThreadsController@store',
         ]);
 
-        $api->delete('threads/{thread}', [
+        //Delete a Thread
+        $api->delete('threads/{channel}/{thread}', [
             'as' => 'threads.destroy',
             'uses' => 'ThreadsController@destroy',
         ]);

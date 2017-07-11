@@ -14,3 +14,8 @@
 $app->get('/', function () use ($app) {
     return $app->version();
 });
+
+
+$app->get('channel/{channel}', function(App\Models\Channel $channel) {
+    return $channel->id;
+});
