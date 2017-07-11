@@ -22,7 +22,7 @@ trait RecordsActivity
         return ['created'];
     }
 
-    protected function recordActivity($event
+    protected function recordActivity($event)
     {
         $this->activity()->create([
             'user_id'  => app('Dingo\Api\Auth\Auth')->user()->id,
