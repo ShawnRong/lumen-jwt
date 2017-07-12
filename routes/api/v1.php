@@ -78,8 +78,8 @@ $api->version('v1', [
     $api->group(['middleware' => 'api.auth'], function ($api) {
         //Delete Token
         $api->delete('authorizations/current', [
-            'as' => 'authorizatoins.delete',
-            'uses' => 'AuthController@delete',
+            'as' => 'authorizatoins.destroy',
+            'uses' => 'AuthController@destroy',
         ]);
 
         //User Detail
@@ -164,8 +164,8 @@ $api->version('v1', [
         ]);
 
         $api->delete('replies/{reply}/favorites', [
-            'as' => 'favorite.destroy',
-            'ues' => 'FavoritesController@destroy',
+            'as'  => 'favorite.destroy',
+            'uses' => 'FavoritesController@destroy',
         ]);
 
         //Thread subscription

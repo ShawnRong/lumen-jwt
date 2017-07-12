@@ -1,0 +1,17 @@
+{
+  "name": "FORUM API",
+  "version": "0.1.0",
+  "description": "a forum api based on lumen & jwt",
+  "title": "forum api",
+  "url": "api",
+  "order": [
+    "Auth",
+    "User",
+    "Thread",
+    "Reply",
+    "Channel",
+    "Profile",
+    "Favorite",
+    "Subscription"
+  ]
+}
